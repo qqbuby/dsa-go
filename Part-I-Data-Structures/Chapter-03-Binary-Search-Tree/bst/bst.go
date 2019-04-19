@@ -398,3 +398,27 @@ func inorder(root *Node, ch chan<- int) {
 //       root = q.Dequeue()
 //     else
 //       root = nil
+func (t *Tree) BreathFirst() <-chan int {
+	ch := make(chan int)
+
+	go func() {
+		defer close(ch)
+		q := &Queue{}
+		root := t.Root
+		for root != nil {
+			ch <- root.Value
+
+			if root.Left != nil {
+				q.Enqueue(root.Left)
+			}
+
+			if root.Right != nil {
+				q.Enqueue(root.Right)
+			}
+
+			root, _ = q.Dequeue()
+		}
+	}()
+
+	return ch
+}
