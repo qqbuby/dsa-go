@@ -57,6 +57,8 @@ https://www.mta.ca/~rrosebru/oldcourse/263114/Dsa.pdf
     双向链表 (doubly list)
 
 AVL Tree
+  // https://en.wikipedia.org/wiki/AVL_tree
+  // https://zh.wikipedia.org/wiki/AVL%E6%A0%91
   // https://medium.com/@sarahzhao25/avl-trees-where-to-find-rotate-them-7b062e0a30f8
   // https://www.tutorialspoint.com/data_structures_algorithms/avl_tree_algorithm.htm
   平衡因子(balance factor): -1, 0, 1
