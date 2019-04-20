@@ -57,15 +57,16 @@ https://www.mta.ca/~rrosebru/oldcourse/263114/Dsa.pdf
     双向链表 (doubly list)
 
 AVL Tree
-  An AVL tree is a binary search tree (BST) with a self-baalancing condition stating that the difference between the height of the left and right subtrees cannot be no more than one.
+  // https://medium.com/@sarahzhao25/avl-trees-where-to-find-rotate-them-7b062e0a30f8
   平衡因子(balance factor): -1, 0, 1
   树的旋转(Tree Rotations): 右旋(Right Rotation), 左旋(Left Rotation)
   自平衡(Tree Rebalancing): LeftRotation, RightRotation, LeftAndRightRotation, RightAndLeftRotation
   插入(Insertion)
-  删除(删除)
+  删除(Deletion)
 
 树 (Tree)
   https://www.quora.com/What-is-the-height-size-and-depth-of-a-binary-tree
+  https://stackoverflow.com/questions/2603692/what-is-the-difference-between-tree-depth-and-height
   节点的高(height): 节点到叶子节点的路径的最大边的数目
     只有一个节点的高位 0，空节点的高位 -1
   树的高(height of binary tree): 根结点的高
