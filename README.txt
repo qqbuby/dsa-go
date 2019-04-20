@@ -68,7 +68,7 @@ AVL Tree
   https://www.quora.com/What-is-the-height-size-and-depth-of-a-binary-tree
   https://stackoverflow.com/questions/2603692/what-is-the-difference-between-tree-depth-and-height
   节点的高(height): 节点到叶子节点的路径的最大边的数目
-    只有一个节点的高位 0，空节点的高位 -1
+    只有一个节点的高为 0，空节点的高为 -1
   树的高(height of binary tree): 根结点的高
   节点的深度(depth): 根结点到节点路径的边的数目
   树的深度(depth of the root node): 根结点的深度
