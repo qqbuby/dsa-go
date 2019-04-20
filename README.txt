@@ -58,8 +58,13 @@ https://www.mta.ca/~rrosebru/oldcourse/263114/Dsa.pdf
 
 AVL Tree
   // https://medium.com/@sarahzhao25/avl-trees-where-to-find-rotate-them-7b062e0a30f8
+  // https://www.tutorialspoint.com/data_structures_algorithms/avl_tree_algorithm.htm
   平衡因子(balance factor): -1, 0, 1
-  树的旋转(Tree Rotations): 右旋(Right Rotation), 左旋(Left Rotation)
+  树的旋转(Tree Rotations):
+    右旋(Right Rotation)
+    左旋(Left Rotation)
+    左-右旋(Left Right Rotation)
+    右-左旋(Right left Rotation)
   自平衡(Tree Rebalancing): LeftRotation, RightRotation, LeftAndRightRotation, RightAndLeftRotation
   插入(Insertion)
   删除(Deletion)
