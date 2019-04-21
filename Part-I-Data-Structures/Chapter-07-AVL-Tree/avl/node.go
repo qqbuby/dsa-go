@@ -48,3 +48,11 @@ func (n *Node) Preorder(ch chan<- int) {
 		n.Right.Preorder(ch)
 	}
 }
+
+func (n *Node) Inorder(ch chan<- int) {
+	if n != nil {
+		n.Left.Inorder(ch)
+		ch <- n.Value
+		n.Right.Inorder(ch)
+	}
+}

@@ -226,7 +226,22 @@ func (t *Tree) rightLeftRotation(node *Node) {
 //       LeftRotation(current)
 //     else
 //       RightAndLeftRotation(current)
-func (t *Tree) CheckBalance(current *Node) {
+func (t *Tree) CheckBalance(node *Node) {
+	bf := node.Left.Height() - node.Right.Height()
+
+	if bf > 1 {
+		if node.Left.Left.Height()-node.Left.Right.Height() > 0 {
+			t.rightRotation(node)
+		} else {
+			t.leftRightRotation(node)
+		}
+	} else if bf < -1 {
+		if node.Right.Left.Height()-node.Right.Right.Height() < 0 {
+			t.leftRotation(node)
+		} else {
+			t.rightLeftRotation(node)
+		}
+	}
 }
 
 // 7.3 Insertion
@@ -258,8 +273,28 @@ func (t *Tree) Add(v int) {
 	if t.root == nil {
 		t.root = &Node{Value: v}
 	} else {
-		t.root.Add(v)
+		t.add(t.root, v)
 	}
+}
+
+func (t *Tree) add(node *Node, v int) {
+	if v < node.Value {
+		if node.Left == nil {
+			node.Left = &Node{Value: v}
+			node.Left.Parent = node
+		} else {
+			t.add(node.Left, v)
+		}
+	} else {
+		if node.Right == nil {
+			node.Right = &Node{Value: v}
+			node.Right.Parent = node
+		} else {
+			t.add(node.Right, v)
+		}
+	}
+
+	t.CheckBalance(node)
 }
 
 func (t *Tree) Preorder() <-chan int {
@@ -268,6 +303,17 @@ func (t *Tree) Preorder() <-chan int {
 	go func() {
 		defer close(ch)
 		t.root.Preorder(ch)
+	}()
+
+	return ch
+}
+
+func (t *Tree) Inorder() <-chan int {
+	ch := make(chan int)
+
+	go func() {
+		defer close(ch)
+		t.root.Inorder(ch)
 	}()
 
 	return ch
