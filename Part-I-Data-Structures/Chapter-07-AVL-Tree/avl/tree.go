@@ -21,13 +21,6 @@ type Tree struct {
 	root *Node
 }
 
-type Node struct {
-	Value  int
-	Left   *Node
-	Right  *Node
-	Parent *Node
-}
-
 // 7.1 Tree Rotations
 //
 // algorithm LeftRotation(node)
@@ -213,22 +206,6 @@ func (t *Tree) rightLeftRotation(node *Node) {
 	node.Parent = pivot
 }
 
-func (n *Node) Height() int {
-	if n == nil {
-		return -1
-	}
-
-	return max(n.Left.Height(), n.Right.Height()) + 1
-}
-
-func max(x, y int) int {
-	if x > y {
-		return x
-	}
-
-	return y
-}
-
 // 7.2 Tree Rebalancing
 //
 // algorithm CheckBalance(current)
@@ -277,29 +254,11 @@ func (t *Tree) CheckBalance(current *Node) {
 //     else
 //       InsertNode(current.Right, value)
 //   CheckBalance(current)
-func (t *Tree) Insert(v int) {
+func (t *Tree) Add(v int) {
 	if t.root == nil {
 		t.root = &Node{Value: v}
 	} else {
-		t.root.Insert(v)
-	}
-}
-
-func (r *Node) Insert(v int) {
-	if v < r.Value {
-		if r.Left == nil {
-			r.Left = &Node{Value: v}
-			r.Left.Parent = r
-		} else {
-			r.Left.Insert(v)
-		}
-	} else {
-		if r.Right == nil {
-			r.Right = &Node{Value: v}
-		} else {
-			r.Right.Insert(v)
-			r.Right.Parent = r
-		}
+		t.root.Add(v)
 	}
 }
 
@@ -312,12 +271,4 @@ func (t *Tree) Preorder() <-chan int {
 	}()
 
 	return ch
-}
-
-func (r *Node) Preorder(ch chan<- int) {
-	if r != nil {
-		ch <- r.Value
-		r.Left.Preorder(ch)
-		r.Right.Preorder(ch)
-	}
 }
