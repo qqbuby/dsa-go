@@ -6,7 +6,7 @@ import (
 
 func ExampleLeftRotationAndRightRotationAVLTree() {
 	t := &Tree{}
-	for _, v := range []int{14, 8, 24, 2, 11} {
+	for _, v := range []int{14, 8, 24, 2, 11, 1} {
 		t.Insert(v)
 	}
 
@@ -15,22 +15,22 @@ func ExampleLeftRotationAndRightRotationAVLTree() {
 	}
 	fmt.Println()
 
-	t.RightRotation(t.Root)
+	t.rightRotation(t.root.Left)
 	for v := range t.Preorder() {
 		fmt.Printf(" %d", v)
 	}
 	fmt.Println()
 
-	t.LeftRotation(t.Root)
+	t.leftRotation(t.root.Left)
 	for v := range t.Preorder() {
 		fmt.Printf(" %d", v)
 	}
 	fmt.Println()
 
 	// Output:
-	// 14 8 2 11 24
-	//  8 2 14 11 24
-	//  14 8 2 11 24
+	// 14 8 2 1 11 24
+	//  14 2 1 8 11 24
+	//  14 8 2 1 11 24
 }
 
 func ExampleLeftRightRotationAVLTree() {
@@ -44,7 +44,7 @@ func ExampleLeftRightRotationAVLTree() {
 	}
 	fmt.Println()
 
-	t.LeftRightRotation(t.Root)
+	t.leftRightRotation(t.root)
 	for v := range t.Preorder() {
 		fmt.Printf(" %d", v)
 	}
@@ -66,7 +66,7 @@ func ExampleRightLeftRotationAVLTree() {
 	}
 	fmt.Println()
 
-	t.RightLeftRotation(t.Root)
+	t.rightLeftRotation(t.root)
 	for v := range t.Preorder() {
 		fmt.Printf(" %d", v)
 	}

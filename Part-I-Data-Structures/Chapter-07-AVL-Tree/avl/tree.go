@@ -13,14 +13,19 @@
 // for an odd number of nodes.
 package avl
 
+import (
+	_ "fmt"
+)
+
 type Tree struct {
-	Root *Node
+	root *Node
 }
 
 type Node struct {
-	Value int
-	Left  *Node
-	Right *Node
+	Value  int
+	Left   *Node
+	Right  *Node
+	Parent *Node
 }
 
 // 7.1 Tree Rotations
@@ -42,60 +47,170 @@ type Node struct {
 //   LeftNode = node.Left
 //   node.Left = LeftNode.Right
 //   LeftNode.Right = node
-func (t *Tree) LeftRotation(n *Node) {
-	if n == nil || n.Right == nil {
+
+//  A                B
+//   \              / \
+//    B     =>     A   C
+//   / \            \
+//  X   C            X
+func (t *Tree) leftRotation(node *Node) {
+	if node == nil || node.Right == nil {
 		return
 	}
 
-	r := n.Right
-	n.Right = r.Left
-	r.Left = n
+	pivot := node.Right
+	node.Right = pivot.Left
 
-	if n == t.Root {
-		t.Root = r
+	if pivot.Left != nil {
+		pivot.Left.Parent = node
 	}
+
+	pivot.Left = node
+
+	if node.Parent != nil {
+		if node.Parent.Right == node {
+			node.Parent.Right = pivot
+		} else {
+			node.Parent.Left = pivot
+		}
+	} else {
+		t.root = pivot
+	}
+
+	pivot.Parent = node.Parent
+	node.Parent = pivot
 }
 
-func (t *Tree) RightRotation(n *Node) {
-	if n == nil || n.Left == nil {
+//      C            B
+//     /            / \
+//    B      =>    A   C
+//   / \              /
+//  A   X            X
+func (t *Tree) rightRotation(node *Node) {
+	if node == nil || node.Left == nil {
 		return
 	}
 
-	l := n.Left
-	n.Left = l.Right
-	l.Right = n
+	pivot := node.Left
 
-	if n == t.Root {
-		t.Root = l
+	node.Left = pivot.Right
+
+	if pivot.Right != nil {
+		pivot.Right.Parent = node
 	}
+
+	pivot.Right = node
+
+	if node.Parent != nil {
+		if node.Parent.Left == node {
+			node.Parent.Left = pivot
+		} else {
+			node.Parent.Right = pivot
+		}
+	} else {
+		t.root = pivot
+	}
+
+	pivot.Parent = node.Parent
+	node.Parent = pivot
 }
 
-func (t *Tree) LeftRightRotation(node *Node) {
-	node1 := node.Left.Right
-
-	node.Left.Right = node1.Left
-	node1.Left = node.Left
-
-	node.Left = node1.Right
-	node1.Right = node
-
-	if node == t.Root {
-		t.Root = node1
+//    C               C               B
+//   /               /               / \
+//  A       =>      B        =>     A   C
+//   \             / \               \ /
+//    B           A   X               X
+//   / \           \
+//  X   X           X
+func (t *Tree) leftRightRotation(node *Node) {
+	if node == nil ||
+		node.Left == nil ||
+		node.Left.Right == nil {
+		return
 	}
+
+	pivot := node.Left.Right // B
+
+	// left rotation
+	node.Left.Right = pivot.Left
+
+	if pivot.Left != nil {
+		pivot.Left.Parent = node.Left
+	}
+
+	pivot.Left = node.Left
+	node.Left.Parent = pivot
+
+	// right rotation
+	node.Left = pivot.Right
+
+	if pivot.Right != nil {
+		pivot.Right.Parent = node
+	}
+
+	pivot.Right = node
+
+	if node.Parent != nil {
+		if node.Parent.Right == node {
+			node.Parent.Right = pivot
+		} else {
+			node.Parent.Left = pivot
+		}
+	} else {
+		t.root = pivot
+	}
+
+	pivot.Parent = node.Parent
+	node.Parent = pivot
 }
 
-func (t *Tree) RightLeftRotation(node *Node) {
-	node1 := node.Right.Left
-
-	node.Right.Left = node1.Right
-	node1.Right = node.Right
-
-	node.Right = node1.Left
-	node1.Left = node
-
-	if node == t.Root {
-		t.Root = node1
+//   A               A                 B
+//    \               \               / \
+//     C      =>       B      =>     A   C
+//    /               / \             \ /
+//   B               X   C             X
+//  / \                 /
+// X   X               X
+func (t *Tree) rightLeftRotation(node *Node) {
+	if node == nil ||
+		node.Right == nil ||
+		node.Right.Left == nil {
+		return
 	}
+
+	pivot := node.Right.Left
+
+	// right rotation
+	node.Right.Left = pivot.Right
+
+	if pivot.Right != nil {
+		pivot.Right.Parent = node.Right
+	}
+
+	pivot.Right = node.Right
+	node.Right.Parent = pivot
+
+	// left rotation
+	node.Right = pivot.Left
+
+	if pivot.Left != nil {
+		pivot.Left.Parent = node
+	}
+
+	pivot.Left = node
+
+	if node.Parent != nil {
+		if node.Parent.Left == node {
+			node.Parent.Left = pivot
+		} else {
+			node.Parent.Right = pivot
+		}
+	} else {
+		t.root = pivot
+	}
+
+	pivot.Parent = node.Parent
+	node.Parent = pivot
 }
 
 func (n *Node) Height() int {
@@ -163,10 +278,10 @@ func (t *Tree) CheckBalance(current *Node) {
 //       InsertNode(current.Right, value)
 //   CheckBalance(current)
 func (t *Tree) Insert(v int) {
-	if t.Root == nil {
-		t.Root = &Node{Value: v}
+	if t.root == nil {
+		t.root = &Node{Value: v}
 	} else {
-		t.Root.Insert(v)
+		t.root.Insert(v)
 	}
 }
 
@@ -174,6 +289,7 @@ func (r *Node) Insert(v int) {
 	if v < r.Value {
 		if r.Left == nil {
 			r.Left = &Node{Value: v}
+			r.Left.Parent = r
 		} else {
 			r.Left.Insert(v)
 		}
@@ -182,6 +298,7 @@ func (r *Node) Insert(v int) {
 			r.Right = &Node{Value: v}
 		} else {
 			r.Right.Insert(v)
+			r.Right.Parent = r
 		}
 	}
 }
@@ -191,7 +308,7 @@ func (t *Tree) Preorder() <-chan int {
 
 	go func() {
 		defer close(ch)
-		t.Root.Preorder(ch)
+		t.root.Preorder(ch)
 	}()
 
 	return ch
