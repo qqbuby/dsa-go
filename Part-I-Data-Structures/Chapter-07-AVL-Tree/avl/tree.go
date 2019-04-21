@@ -297,6 +297,117 @@ func (t *Tree) add(node *Node, v int) {
 	t.CheckBalance(node)
 }
 
+// 7.4 Deletion
+//
+// algorithm Remove(value)
+//   Pre: value is the value of the node to remove, root is the root node
+//        of the Avl
+//   Post: node with vlaue is removed and tree rebalanced if found in which
+//         case yiels true, otherwise false
+//   nodeToRemove = root
+//   parent = nil
+//   Stack path = root
+//   while nodeToRemove != nil && nodeToRemove.Value != value
+//     parent = nodeToRemove
+//     if value < nodeToRemove.Value
+//       nodeToRemove = nodeToRemove.Left
+//     else
+//       nodeToRemvoe = nodeToRemove.Right
+//     path.Push(nodeToRemove)
+//   if nodeToRemove == nil
+//     return false // value not in the Avl
+//   parent = FindParent(value)
+//   if count = 1 // count keeps the # of nodes in the Avl
+//     root = nil
+//   else if nodeToRemove.Left = nil and nodeToRemove.Right = nil
+//     if nodeToRemove.Value < parent.Value
+//       parent.Left = nil
+//     else
+//       parent.Right = nil
+//   else if nodeToRemove.Left = nil and nodeToRemove.Right != nil
+//     if nodeToRemove.Value < parent.Value
+//       parent.Left = nodeToRemove.Right
+//     else
+//       parent.Right = nodeToRemove.Right
+//   else if nodeToRemove.Left != nil and nodeToRemove.Right = nil
+//     if nodeToRemove.Value < parent.Value
+//       parent.Left = nodeToRemove.Left
+//     else
+//       parent.Right = nodeToRemove.Left
+//   else
+//     largestValue = nodeToRemove.Left
+//     while largestValue.Right != nil
+//       largestValue = largestValue.Right
+//     FindParent(largest.Right.Value).Right = nil
+//     nodeToRemove.Value = largestValue.Right.Value
+//   while path.Count > 0
+//     CheckBalance(path.Pop()) // we trackback tothe root node check balance
+//   count = count - 1
+//   return true
+func (t *Tree) Remove(v int) bool {
+	if t.root == nil {
+		return false
+	}
+
+	s := &Stack{}
+	n := t.root
+	for n != nil && n.Value != v {
+		if v < n.Value {
+			n = n.Left
+		} else {
+			n = n.Right
+		}
+		s.Push(n)
+	}
+
+	if n.Left == nil && n.Right == nil {
+		if n.Parent.Left == n {
+			n.Parent.Left = nil
+		} else {
+			n.Parent.Right = nil
+		}
+	} else if n.Left == nil && n.Right != nil {
+		if n.Parent.Left == n {
+			n.Parent.Left = n.Right
+			n.Right.Parent = n.Parent
+		} else {
+			n.Parent.Right = n.Right
+			n.Right.Parent = n.Parent
+		}
+	} else if n.Left != nil && n.Right == nil {
+		if n.Parent.Left == n {
+			n.Parent.Left = n.Left
+			n.Left.Parent = n.Parent
+		} else {
+			n.Parent.Right = n.Left
+			n.Left.Parent = n.Parent
+		}
+	} else {
+		maxL := n.Left
+		for maxL.Right != nil {
+			maxL = maxL.Right
+		}
+
+		if maxL.Parent.Left == maxL {
+			maxL.Parent.Left = nil
+		} else {
+			maxL.Parent.Right = nil
+		}
+
+		n.Value = maxL.Value
+	}
+
+	for {
+		if v, ok := s.Pop(); ok {
+			t.CheckBalance(v)
+		} else {
+			break
+		}
+	}
+
+	return true
+}
+
 func (t *Tree) Preorder() <-chan int {
 	ch := make(chan int)
 

@@ -162,7 +162,29 @@ func ExampleAVLTree() {
 	}
 	fmt.Println()
 
+	t.Remove(24)
+	for v := range t.Preorder() {
+		fmt.Printf(" %d", v)
+	}
+	fmt.Println()
+
+	t.Remove(8)
+	for v := range t.Preorder() {
+		fmt.Printf(" %d", v)
+	}
+	fmt.Println()
+
+	t.Remove(14)
+	t.Remove(2)
+	for v := range t.Preorder() {
+		fmt.Printf(" %d", v)
+	}
+	fmt.Println()
+
 	// Output:
 	// 14 8 2 11 15 24
 	//  2 8 11 14 15 24
+	//  14 8 2 11 15
+	//  14 2 11 15
+	//  11 15
 }
