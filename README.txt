@@ -1,5 +1,28 @@
 https://www.mta.ca/~rrosebru/oldcourse/263114/Dsa.pdf
 
+O(1) constant:
+    the operation doesn't depend on the size of its input, e.g. adding
+    a node to the tail of a linked list where we always maintain a pointer to
+    the tail node.
+
+O(n) linear:
+    the run time complexity is proportionate to the size of n.
+
+O(log n) logarithmic:
+    normally associated with algorithms that break the problem
+    into smaller chunks per each invocation, e.g. searching a binary search
+    tree.
+
+O(n log n) just n log n:
+    usually associated with an algorithm that breaks the problem
+    into smaller chunks per each invocation, and then takes the results
+
+O(n2) quadratic: e.g. bubble sort.
+
+O(n3) cubic: very rare.
+
+O(2n) exponential: incredibly rare.
+
 链表 (Linked List)
   单链表(Singly Linked List)
     插入 (Insertion)
