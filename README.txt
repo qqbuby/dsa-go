@@ -103,3 +103,5 @@ AVL Tree
   节点的深度(depth): 根结点到节点路径的边的数目
   树的深度(depth of the root node): 根结点的深度
   层级(level)
+
+// https://codefarm.me/2019/03/21/mathematical-induction-and-recusion/
