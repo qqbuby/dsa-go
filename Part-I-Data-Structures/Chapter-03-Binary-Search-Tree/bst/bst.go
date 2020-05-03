@@ -102,7 +102,15 @@ func (t *Tree) Contains(value int) bool {
 // 1. the value to remove is a leaf node; or
 // 2. the value to remove has a right subtree, but no left subtree; or
 // 3. the value to remove has a left subtree, but no right subtree; or
-// 4. the value to remove has both a left and right subtree in which case we promote the largest value in the left subtree
+// 4. the value to remove has both a left and right subtree in which case we
+// promote the largest value in the left subtree (or promote the least value in the right subtree ?)
+//
+// There is also an implicit fifth case whereby the node to be removed is the
+// only node in the tree. This case is already covered by the ¯rst, but should be
+// noted as a possibility nonetheless.
+//
+// Of course in a BST a value may occur more than once. In such a case the
+// first occurrence of that value in the BST will be removed.
 //
 // algorithm Remove(value)
 //   Pre: value is the value of the node to remove, root is the root node of the BST
