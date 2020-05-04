@@ -113,6 +113,12 @@ func (h *Heap) Add(value int) {
 // that empty hole so that the garbage collector can reclaim that memory. If we
 // were to not null that hole then the object could still be reached and thus won't
 // be garbage collected.
+//
+// Potentially you will have at most
+// LengthOf(heapArray) - Count garbage values in the backing heap array data
+// structure. The garbage values of course vary from platform to platform. To
+// make things simple the garbage value of a reference type will be simple; and 0
+// for a value type.
 func (h *Heap) Remove(value int) bool {
 	index := h.FindIndex(value)
 	if index < 0 {
