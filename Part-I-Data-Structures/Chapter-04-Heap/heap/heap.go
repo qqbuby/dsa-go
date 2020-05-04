@@ -16,6 +16,13 @@
 //   1. (index - 1) / 2 (parent index)
 //   2. 2 * (index + 1) (left child)
 //   3. 2 * (index + 2) (right child)
+//
+// We does not specify how we would handle adding null references to
+// the heap. This varies from case to case; sometimes null values are prohibited
+// entirely; in other cases we may treat them as being smaller than any non-null
+// value, or indeed greater than any non-null value. You will have to resolve this
+// ambiguity yourself having studied your requirements. For the sake of clarity we
+// will avoid the issue by prohibiting null values.
 package heap
 
 type Heap struct {
