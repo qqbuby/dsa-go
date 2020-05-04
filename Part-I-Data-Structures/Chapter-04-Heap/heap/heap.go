@@ -105,6 +105,14 @@ func (h *Heap) Add(value int) {
 //     else
 //       Swap(heap[index], heap[right]
 //       index = right
+//
+// Please note that in our deletion algorithm that we don't default the removed
+// value in the heap array. If you are using a heap for reference types, i.e. objects
+// that are allocated on a heap you will want to free that memory. This is important
+// in both unmanaged, and managed languages. In the latter we will want to null
+// that empty hole so that the garbage collector can reclaim that memory. If we
+// were to not null that hole then the object could still be reached and thus won't
+// be garbage collected.
 func (h *Heap) Remove(value int) bool {
 	index := h.FindIndex(value)
 	if index < 0 {
