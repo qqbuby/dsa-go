@@ -95,6 +95,33 @@ AVL Tree
   删除(Deletion)
 
 树 (Tree)
+
+    边(Edge):
+        Connetions between one node to another.
+        Basically, an edge is a line between two nodes, or a node and a leaf.
+
+    路径(Path):
+        A sequence of nodes and edges connecting a node with a descendant.
+
+        A path starts from a node and ends at another node or a leaf. Please don't look over the following points:
+        1. When we talk about a path, it includes all nodes and all edges along the path, *not just edges*.
+        2. The direction of a path is strictly from top to bottom and cannot be changed in middle. Also there will be no path starting from a leaf or from a child node to a parent node.
+
+    高(Height):
+        The **height of a node** is the number of edges on the longest downward path between that node and a leaf.
+
+    深度(Depth):
+        The depth of a node is the number of edges from the node to the tree's root node.
+
+        Note that **the depth of the root is 0**.
+
+    层级(Level):
+        The level of a node is defined by 1 + the number of connetions between the node and the root.
+
+        Simply putting, **level is depth plus 1**.
+
+        The import thing to rember is when talking about level, it **starts from 1** and **the level of the root is 1**.
+
   https://www.quora.com/What-is-the-height-size-and-depth-of-a-binary-tree
   https://stackoverflow.com/questions/2603692/what-is-the-difference-between-tree-depth-and-height
   节点的高(height): 节点到叶子节点的路径的最大边的数目
@@ -102,6 +129,6 @@ AVL Tree
   树的高(height of binary tree): 根结点的高
   节点的深度(depth): 根结点到节点路径的边的数目
   树的深度(depth of the root node): 根结点的深度
-  层级(level)
+  层级(level): height + 1
 
 // https://codefarm.me/2019/03/21/mathematical-induction-and-recusion/
